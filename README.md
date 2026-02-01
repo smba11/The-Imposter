@@ -14,3 +14,9 @@ You can deploy from either location:
 2. In your repository settings, enable GitHub Pages.
 3. Choose either the root (`/`) or `/docs` folder as the source.
 4. Visit the published URL to play.
+
+### If the page still shows only the README title
+- Double-check the GitHub Pages source setting (root vs `/docs`).
+- Confirm the branch you selected is the one with `index.html` and `web.js`.
+- Wait a minute after saving the Pages settings for the site to rebuild.
+- This repo includes `.nojekyll` markers in both the root and `docs/` to prevent Jekyll from overriding the static site.
