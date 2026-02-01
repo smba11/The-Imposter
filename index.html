@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Imposter Game</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      margin: 0;
+      background: #0e0f14;
+      color: #f5f7ff;
+    }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    p {
+      line-height: 1.6;
+      color: #c2c6dd;
+    }
+    .card {
+      background: #171a24;
+      border: 1px solid #2b2f45;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 30px rgba(10, 15, 30, 0.45);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    input, select, button {
+      font: inherit;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #3e4360;
+      background: #11131d;
+      color: inherit;
+    }
+    input:focus, select:focus, button:focus {
+      outline: 2px solid #7c87ff;
+      outline-offset: 2px;
+    }
+    button {
+      cursor: pointer;
+      background: linear-gradient(135deg, #6f7bff, #c58bff);
+      border: none;
+      color: #06070d;
+      font-weight: 700;
+    }
+    button.secondary {
+      background: #2a2f48;
+      color: #f5f7ff;
+      border: 1px solid #3e4360;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      padding: 8px 0;
+      border-bottom: 1px solid #2b2f45;
+      display: flex;
+      justify-content: space-between;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #232844;
+      color: #c5cbff;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .hidden {
+      display: none;
+    }
+    .vote-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .result {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .muted {
+      color: #9aa1c2;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>🎭 The Imposter Game</h1>
+      <p>Play the classic party game directly in your browser. Add players, reveal roles in secret, discuss clues, and then vote to find the imposter.</p>
+    </header>
+
+    <section class="card" id="setup-card">
+      <h2>1. Add Players</h2>
+      <label for="player-name">Player name</label>
+      <div class="row">
+        <input id="player-name" type="text" placeholder="Enter a name" />
+        <button id="add-player">Add Player</button>
+        <button id="start-game" class="secondary">Start Game</button>
+      </div>
+      <p class="muted">Need at least 2 players.</p>
+      <ul id="player-list"></ul>
+    </section>
+
+    <section class="card hidden" id="reveal-card">
+      <h2>2. Reveal Roles</h2>
+      <p class="muted">Pass the device to each player. Tap reveal, memorize your info, then hide it before passing on.</p>
+      <div class="badge" id="reveal-counter"></div>
+      <h3 id="reveal-player"></h3>
+      <div id="reveal-info" class="hidden">
+        <p><strong>Role:</strong> <span id="reveal-role"></span></p>
+        <p><strong>Category:</strong> <span id="reveal-category"></span></p>
+        <p><strong>Secret word:</strong> <span id="reveal-word"></span></p>
+      </div>
+      <div class="row">
+        <button id="reveal-button">Reveal</button>
+        <button id="next-player" class="secondary">Next Player</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="discussion-card">
+      <h2>3. Discussion</h2>
+      <p>Give one-word clues and debate who the imposter is. When you are ready, move to voting.</p>
+      <button id="start-voting">Go to Voting</button>
+    </section>
+
+    <section class="card hidden" id="voting-card">
+      <h2>4. Voting</h2>
+      <p class="muted">Each player selects who they think is the imposter (not themselves).</p>
+      <div id="vote-area" class="vote-grid"></div>
+      <button id="submit-votes">Reveal Results</button>
+    </section>
+
+    <section class="card hidden" id="results-card">
+      <h2>Results</h2>
+      <p class="result" id="result-message"></p>
+      <p><strong>The imposter was:</strong> <span id="result-imposter"></span></p>
+      <p><strong>Secret word:</strong> <span id="result-word"></span></p>
+      <div id="result-votes"></div>
+      <button id="restart" class="secondary">Play Again</button>
+    </section>
+  </main>
+
+  <script src="web.js"></script>
+</body>
+</html>
